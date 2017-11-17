@@ -95,19 +95,25 @@ a {
   text-decoration: none;
 
   &:visited {
-    color: darken($brand-color, 15%);
+    color: purple;
   }
 
   &:hover {
-    color: $text-color;
+    text-decoration: underline;
   }
 
   .social-media-list &:hover {
     text-decoration: none;
 
     .username {
-      text-decoration: underline;
+      &:hover {
+    text-decoration: underline;
+  }
     }
+  }
+  
+  .site-title {
+  color: red;
   }
 }
 
