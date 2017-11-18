@@ -26,6 +26,7 @@ disqus:
   shortname: https-edvinpontuslarsson-github-io
 
 # Build settings
+future: true
 markdown: kramdown
 theme: minima
 plugins:
