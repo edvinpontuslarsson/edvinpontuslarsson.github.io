@@ -1,1 +1,9 @@
-/Edvin Larsson
+/* DEVELOPER */
+Edvin Larsson
+edvinpontuslarsson@gmail.com
+Linnaeus University, Kalmar, Sweden.
+
+/* SITE */
+Last update: November 2017
+
+This site is developed with jekyll, inspired by the Minima theme, on Cloud9 IDE and hosted on Github Pages.
