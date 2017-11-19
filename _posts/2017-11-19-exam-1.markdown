@@ -1,0 +1,52 @@
+---
+layout: post
+title:  "Answers to exam assignment 1"
+date:   2017-11-19 15:35:07 +0000
+categories: jekyll update
+---
+**_•  What do you think of pre-compiling your CSS?_**
+
+**•	Compare to regular CSS**
+
+Pre-compiling CSS enables methods that are not possible with regular CSS. 
+One very useful method is the ability to create variables that can then be used at multiple spots. 
+You can also define variables relative to other variables, 
+for example create a smaller font-size variable that is for example 75 % of the size of the regular font size. 
+Another very useful method is the ability to encapsulate all the code defining an element. 
+
+**•	Which techniques did you use?**
+
+Sass with "SCSS" syntax. 
+
+**•	Pros and cons?**
+
+I don’t think there are any cons with pre-compiling CSS. Because you can use it similarly to regular CSS, but then there are also added methods. 
+By encapsulating all the code defining an element, you can reduce repetition and make the code more compact. That makes the code easier to read and maintain.  
+
+By creating a variable and using it at multiple spots, you only need to change the original variable to make multiple changes happen. If, for example, you want some elements to have the same color, you can define that with a variable, if you then change the color, it will change for all elements defined by that variable. 
+By for example defining the size of an element relative to another element, the proportionalities you want will remain even if you change the size of that element. 
+
+**_•	What do you think of static site generators? What type of projects are they suitable for?_**
+
+Static site generators are very useful for big websites. Without static site generators, to make changes to the HTML on all the site’s web pages, you would have to edit all HTML files. For big websites, that would be extremely tedious work and there would be a substantial risk of making a mistake on one page and that would then be out of sync with the rest of the site. 
+Using static site generators make big websites much more easily maintainable. You then only need to change the variables at one place to change the whole website and keep it consistent. 
+
+**_•	What is robots.txt and how have you configure it for your site?_**
+
+Search engines use web robots to locate web pages, robots.txt gives instructions to web robots. With robots.txt you can for example define pages you would want the web robots to avoid and you can also with robots.txt instruct web robots to ignore your website. 
+ 
+I have chosen to only allow Google's web robots, but web robots could still choose to ignore that. 
+
+**_•	What is humans.txt and how have you configure it for your site?_**
+
+It is a file for presenting the creators of a website. It can be hidden for users browsing the site in a normal way. I link to my humans.txt-file in the HTML-code for the head of this site. Users can find it by viewing the source code, but it is hidden when browsing the site in a normal way. 
+
+**_•	How did you implements comments to blog posts_**
+
+By using Disqus. Basically, I did that by giving the website a short name on Disqus and then referring to that in the _config.yml-file. 
+
+**_•	What is Open Graph and how do you make use of it?_**
+
+A SEO tag in a web page makes the web page function as an object when shared on social media outlets that use the Open Graph protocol. 
+
+Jekyll has a SEO-tag plugin. I referred to that in the gemfile and _config.yml file. Then I installed the plugin. Then the SEO tag was automatically added to the head of the HTML-files. The tag contains information about the page. 
