@@ -49,18 +49,3 @@ img {
  .againHangButton {
     margin-top: 15px;
 }
-@media screen and (max-width: 850px) {
-    #hangman-space {
-        width: 350px;
-        height: 500px;  
-    }
-    img {
-        height: 250px;
-    }
-    .word-space {
-        padding-top: 25px;
-     }
-     .solvedWords {
-         padding-top: 15px;
-     }
-}
