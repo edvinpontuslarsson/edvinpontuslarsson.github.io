@@ -49,7 +49,7 @@ img {
  .againHangButton {
     margin-top: 15px;
 }
-@media screen and (max-width: 850px) {
+@media only screen and (max-width: 850px) {
     #hangman-space {
         width: 350px;
         height: 500px;  
