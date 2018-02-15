@@ -129,9 +129,11 @@
 
     this.container.appendChild(this.instruction)
 
-        // Gets the nickname and starts the game
+        // Gets the nickname and starts the game, after protection against code injection
     this.instruction.querySelectorAll('.hangStartBtn')[0].addEventListener('click', () => {
-      this.playerNick = this.instruction.querySelectorAll('.hangNick')[0].value
+      let tempNick = this.instruction.querySelectorAll('.hangNick')[0].value
+      let secureNick = tempNick.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      this.playerNick = secureNick
       this.container.removeChild(this.instruction)
       this.hangGame()
     })
