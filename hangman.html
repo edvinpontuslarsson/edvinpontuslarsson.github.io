@@ -131,9 +131,7 @@
 
         // Gets the nickname and starts the game
     this.instruction.querySelectorAll('.hangStartBtn')[0].addEventListener('click', () => {
-      let tempNick = this.instruction.querySelectorAll('.hangNick')[0].value
-      let secureNick = tempNick.replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      this.playerNick = secureNick
+      this.playerNick = this.instruction.querySelectorAll('.hangNick')[0].value
       this.container.removeChild(this.instruction)
       this.hangGame()
     })
