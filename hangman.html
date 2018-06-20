@@ -23,6 +23,7 @@
         </div>
 </template>
 
+<script src="https://cdn.rawgit.com/yahoo/xss-filters/master/dist/xss-filters.js"></script>
 <script>
     class Hangman {
   constructor () {
@@ -82,22 +83,17 @@
       'word'
     ]
     this.wordShuffle()
-
     this.storage = window.localStorage
     this.container = document.querySelector('#hangman-space')
-
     this.beginning()
   }
-
     /**
      * Creates a new Hangman instance
      */
   static create () {
     const hangman = new Hangman()
-
     return hangman
   }
-
     /**
      * Fisher-Yates shuffle algorithm
      */
@@ -109,40 +105,33 @@
       this.words[i] = temp
     }
   }
-
     /**
      * Picks the last word and removes it from the array.
      */
   wordPick () {
     return this.words.pop()
   }
-
     /**
     * Renders instructions from HTML-template
     */
   beginning () {
     this.solvedWords = 0
-
     let template = document.querySelector('#hangmanInstructions')
-
     this.instruction = document.importNode(template.content.firstElementChild, true)
-
     this.container.appendChild(this.instruction)
-
         // Gets the nickname and starts the game
     this.instruction.querySelectorAll('.hangStartBtn')[0].addEventListener('click', () => {
-      this.playerNick = this.instruction.querySelectorAll('.hangNick')[0].value
+      const tempNick = this.instruction.querySelectorAll('.hangNick')[0].value
+      this.playerNick = xssFilters.inHTMLData(tempNick)
       this.container.removeChild(this.instruction)
       this.hangGame()
     })
   }
-
     /**
     * Initiates a Hangman game round
     */
   hangGame () {
     this.currentWord = this.wordPick()
-
     if (this.currentWord === undefined) {
       this.theEnd('Wow! Congratulations, you solved all words', ':)', true)
     } else {
@@ -151,37 +140,29 @@
       this.wordLength()
       this.amountOfCorrectGuesses = 0
       this.fails = 0
-
             // inspects the selected letter
       this.hangWindow.querySelectorAll('.letter-space')[0]
             .addEventListener('click', (event) => {
               event.preventDefault()
-
               if (event.target.value !== undefined) {
                 this.hangWindow.querySelectorAll(`.${event.target.value}`)[0]
                 .classList.add('hide')
-
                 this.matches = false
-
                 this.checkForMatch(event.target.value)
-
                 if (this.amountOfCorrectGuesses === this.currentWord.length) {
                   setTimeout(() => {
                     this.container.removeChild(this.hangWindow)
                     this.newRound()
                   }, 250)
                 }
-
                 if (this.matches === false) {
                   this.fails += 1
-
                   if (this.fails === 11) {
                     setTimeout(() => {
                       this.container.removeChild(this.hangWindow)
                       this.theEnd('Game over', ':(', false)
                     }, 300)
                   }
-
                   this.hangWindow.querySelectorAll('.hangmanPic')[0].src = `
                     pics/hangman-pics/hm${this.fails}.png
                     `
@@ -190,14 +171,12 @@
             })
     }
   }
-
 /**
  * Renders the first picture, divs for an alphabet and the word.
  * Also displays solved words and the nickname.
  */
   hangScene () {
     this.hangWindow = document.createElement('div')
-
     this.hangWindow.innerHTML = `
           <img src="pics/hangman-pics/hm0.png" class="hangmanPic" alt="Hangman picture">
           <div class="letter-space"></div>
@@ -209,29 +188,24 @@
   
     this.container.appendChild(this.hangWindow)
   }
-
 /**
  * Renders an alphabet to the user.
  */
   renderAlphabet () {
     this.letterSpace = this.hangWindow.querySelectorAll('.letter-space')[0]
-
   for (let i = 0; this.alphabet.length > i; i += 1) {
     let letter = document.createElement('div')
     letter.innerHTML = `
     <input type="submit" class="${this.alphabet[i]}" value="${this.alphabet[i]}">
     `
     letter.setAttribute('class', 'letter')
-
     if (i === 3 || i === 7 || i === 11 || i === 15 || i === 19 || i === 23) {
       letter.appendChild(document.createElement('br'))
       letter.appendChild(document.createElement('br'))
     }
-
     this.letterSpace.appendChild(letter)
   }
   }
-
 /**
  * Renders an underscore for every letter in the word
  */
@@ -242,7 +216,6 @@
         this.hangWindow.querySelectorAll('.word-space')[0].appendChild(underscore)
       }
   }
-
 /**
  * Checks if the selected letter occurs in the current word.
  * Also replaces the underscore symbols with the correct letters
@@ -263,7 +236,6 @@
         }
       }
   }
-
 /**
  * Initiates a new Hangman round
  */
@@ -272,7 +244,6 @@
     this.solvedWords += 1
     this.hangGame()
   }
-
 /**
  * Renders ending message with high score list
  *
@@ -283,7 +254,6 @@
   theEnd (message, smiley, finished) {
     this.playerStorage()
   this.sorts()
-
   this.ending = document.createElement('div')
   this.ending.innerHTML = `
     <p class="hangEnd">${message} ${this.playerNick} ${smiley}</p>
@@ -295,7 +265,6 @@
     `
   this.ending.classList.add('hangmanEnding')
   this.container.appendChild(this.ending)
-
   for (let i = 0; this.hangmanPlayers.length > i; i += 1) {
     let championSpot = document.createElement('p')
     championSpot.innerHTML = `
@@ -306,39 +275,32 @@
       break
     }
   }
-
   if (this.hangmanPlayers.length < 1) {
     this.ending.removeChild(this.ending.querySelectorAll('.hangmanHighScore')[0])
   }
-
   if (finished === true) {
     this.ending.removeChild(this.ending.querySelectorAll('.lastWordWas')[0])
   }
-
   this.ending.querySelectorAll('.againHangButton')[0].addEventListener('click', () => {
     this.container.removeChild(this.ending)
     this.beginning()
   })
   }
-
 /**
  * Gets previous Hangman players from local storage
  * Also sets it with the current user
  */
   playerStorage () {
     this.hangmanPlayers = JSON.parse(this.storage.getItem('hangmanPlayers')) || []
-
   if (this.solvedWords > 0) {
     let player = {
       nickname: this.playerNick,
       score: this.solvedWords
     }
-
     this.hangmanPlayers.push(player)
     this.storage.setItem('hangmanPlayers', JSON.stringify(this.hangmanPlayers))
   }
   }
-
   /**
    * Sorts players after the highest amount of solved words
    */
@@ -348,7 +310,6 @@
       })
   }
   }
-
   Hangman.create()
 </script>
 </body>
